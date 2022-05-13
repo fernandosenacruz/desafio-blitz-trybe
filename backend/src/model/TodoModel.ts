@@ -1,10 +1,13 @@
-import { PrismaClient } from '@prisma/client'
-import ITodo from '../interface/ITodo'
+import { PrismaClient } from '@prisma/client';
+import ITodo from '../interface/ITodo';
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 export default class TodoModel {
-  public async createTodo(title: string, description: string): Promise<ITodo> {
+  public createTodo = async (
+    title: string,
+    description: string
+  ): Promise<ITodo> => {
     const newTodo = await prisma.todo.create({
       data: {
         title,
@@ -16,9 +19,9 @@ export default class TodoModel {
     });
 
     return newTodo;
-  }
+  };
 
-  public async getTodos(status: string): Promise<ITodo[]> {
+  public getTodos = async (status: string): Promise<ITodo[]> => {
     const todos = await prisma.todo.findMany({
       where: {
         status,
@@ -29,17 +32,22 @@ export default class TodoModel {
     });
 
     return todos;
-  }
+  };
 
-  public async getTodo(id: number): Promise<ITodo | null> {
+  public getTodo = async (id: number): Promise<ITodo | null> => {
     const todo = await prisma.todo.findFirst({
       where: { id },
     });
 
     return todo;
-  }
+  };
 
-  public async updateTodo(id: number, title: string, description: string, status: string): Promise<ITodo> {
+  public updateTodo = async (
+    id: number,
+    title: string,
+    description: string,
+    status: string
+  ): Promise<ITodo> => {
     const updatedTodo = await prisma.todo.update({
       where: { id },
       data: {
@@ -51,9 +59,9 @@ export default class TodoModel {
     });
 
     return updatedTodo;
-  }
+  };
 
-  public async deleteTodo(id: number): Promise<unknown> {
+  public deleteTodo = async (id: number): Promise<ITodo> => {
     return await prisma.todo.delete({ where: { id } });
-  }
+  };
 }

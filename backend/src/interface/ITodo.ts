@@ -13,10 +13,10 @@ interface IMessage {
 
 export interface ITodoService {
   code: number;
-  data: Promise<ITodo | IMessage>;
+  data: ITodo | IMessage;
 }
 
 export interface ITodosService {
   code: number;
-  data: Promise<ITodo[] | IMessage>;
+  data: ITodo[] | IMessage;
 }
