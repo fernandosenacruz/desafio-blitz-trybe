@@ -25,7 +25,7 @@ export default class TodoController {
 
   public getTodos = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { status } = req.body;
+      const { status } = req.query;
 
       const { code, data } = await this.todoService.getTodos(status);
 
