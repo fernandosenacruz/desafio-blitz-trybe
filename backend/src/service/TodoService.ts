@@ -1,5 +1,5 @@
 import TodoModel from '../model/TodoModel';
-import { ITodoService, ITodosService } from '../interface/ITodo';
+import { IDelete, ITodoService } from '../interface/ITodo';
 
 export default class TodoService {
   constructor(private todoModel = new TodoModel()) {}
@@ -17,7 +17,7 @@ export default class TodoService {
     return { code: 201, data: newTodo };
   };
 
-  public getTodos = async (status: string): Promise<ITodosService> => {
+  public getTodos = async (status: string): Promise<ITodoService> => {
     const todos = await this.todoModel.getTodos(status);
 
     return { code: 200, data: todos };
@@ -48,11 +48,12 @@ export default class TodoService {
   };
 
   public deleteTodo = async (id: number): Promise<ITodoService> => {
-    const { data: { id: idTodo } } = await this.getTodo(id);
-  
-    if (!idTodo) return { code: 400, data: { message: 'inform a valid id' } };
+    const { code, data } = await this.getTodo(id);
+    console.log(data);
+    
+    if (code === 404) return { code: 400, data: { message: 'inform a valid id' } };
 
-    await this.todoModel.deleteTodo(idTodo);
+    await this.todoModel.deleteTodo(data.id);
 
     return { code: 200, data: { message: 'deleted' } };
   };

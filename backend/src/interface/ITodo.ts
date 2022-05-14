@@ -13,10 +13,11 @@ interface IMessage {
 
 export interface ITodoService {
   code: number;
-  data: ITodo | IMessage;
-}
-
-export interface ITodosService {
-  code: number;
-  data: ITodo[] | IMessage;
+  data:
+    | {
+        id: number;
+      }
+    | ITodo
+    | ITodo[]
+    | IMessage;
 }
