@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Table } from 'react-bootstrap';
-import { Dropdown } from 'react-bootstrap';
+import React, { useContext, useEffect, useState } from 'react';
+import { Table, Dropdown, Button } from 'react-bootstrap';
 import axios from 'axios';
 // import API from '../utils/getTodo';
 
@@ -8,13 +7,17 @@ const TableTodo = () => {
   const [todos, setTodos] = useState([
     {
       id: null,
-      title: 'No task yet',
+      title: '',
       description: '',
       status: '',
       createdAt: '',
       updatedAt: '',
     },
   ]);
+
+  const [, setTodo] = useContext();
+
+  useEffect(() => {}, []);
 
   const getTodo = async (status) => {
     let baseURL = 'http://localhost:3001/';
@@ -39,10 +42,19 @@ const TableTodo = () => {
       console.log(error);
     }
   };
-  useEffect(() => {}, []);
+
+  const handleClick = async (id) => {
+    try {
+      const { data } = await axios.get(`http://localhost:3001/todo/${id}`)
+      
+      setTodo(data);
+    } catch (error) {
+      console.log(error);
+    };
+  };
 
   return (
-    <>
+    <div className="table-todo">
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
@@ -62,13 +74,31 @@ const TableTodo = () => {
                 <td>{title}</td>
                 <td>{description}</td>
                 <td>{status}</td>
+                <div className="btn-side">
+                  <Button
+                    variant="warning"
+                    type="button"
+                    size="sm"
+                    onClick={() => handleClick(id)}
+                  >
+                    update
+                  </Button>
+                  <Button
+                    variant="danger"
+                    type="button"
+                    size="sm"
+                    onClick={() => handleClick(id)}
+                  >
+                    delete
+                  </Button>
+                </div>
               </tr>
             </tbody>
           ))
         )}
       </Table>
       <Dropdown>
-        <Dropdown.Toggle id="dropdown-button-dark-example1" variant="secondary">
+        <Dropdown.Toggle id="dropdown-status" variant="secondary">
           Status
         </Dropdown.Toggle>
 
@@ -91,7 +121,7 @@ const TableTodo = () => {
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown>
-    </>
+    </div>
   );
 };
 
