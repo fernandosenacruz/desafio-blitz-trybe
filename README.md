@@ -1,1 +1,1 @@
-# desafio-blitz-trybe-backend
+# desafio-blitz-trybe
