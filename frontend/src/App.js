@@ -1,7 +1,7 @@
-import TodoContextProvider from './TodoContext';
+import TodoContextProvider from './context/TodoContext';
 import Table from './component/Table';
 import Todo from './component/Todo';
-import UpdateTable from './component/UpdateTable';
+// import UpdateTodo from './component/UpdateTodo';
 import './App.css';
 
 function App() {
@@ -10,7 +10,7 @@ function App() {
       <TodoContextProvider>
         <Table />
         <Todo />
-        <UpdateTable />
+        {/* <UpdateTodo /> */}
       </TodoContextProvider>
     </>
   );

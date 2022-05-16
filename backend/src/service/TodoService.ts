@@ -1,5 +1,5 @@
 import TodoModel from '../model/TodoModel';
-import { IDelete, ITodoService } from '../interface/ITodo';
+import ITodo, { IMessage, ITodoService, ITodosService } from '../interface/ITodo';
 
 export default class TodoService {
   constructor(private todoModel = new TodoModel()) {}
@@ -7,7 +7,7 @@ export default class TodoService {
   public createTodo = async (
     title: string,
     description: string
-  ): Promise<ITodoService> => {
+  ): Promise<ITodoService | IMessage> => {
     if (!title || !description)
       return { code: 400, data: { message: 'empty title or description' } };
     
@@ -17,13 +17,13 @@ export default class TodoService {
     return { code: 201, data: newTodo };
   };
 
-  public getTodos = async (status: string): Promise<ITodoService> => {
+  public getTodos = async (status: string): Promise<ITodosService> => {
     const todos = await this.todoModel.getTodos(status);
 
     return { code: 200, data: todos };
   };
 
-  public getTodo = async (id: number): Promise<ITodoService> => {
+  public getTodo = async (id: number): Promise<ITodoService | IMessage> => {
     const todo = await this.todoModel.getTodo(id);
 
     if (!todo) return { code: 404, data: { message: 'To do not found' } };
@@ -47,9 +47,8 @@ export default class TodoService {
     return { code: 200, data: todo };
   };
 
-  public deleteTodo = async (id: number): Promise<ITodoService> => {
-    const { code, data } = await this.getTodo(id);
-    console.log(data);
+  public deleteTodo = async (id: number): Promise<ITodoService | IMessage> => {
+    const { code, data } = await this.getTodo(id) as ITodoService;
     
     if (code === 404) return { code: 400, data: { message: 'inform a valid id' } };
 

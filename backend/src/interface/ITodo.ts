@@ -7,12 +7,19 @@ export default interface ITodo {
   updatedAt: Date;
 }
 
+ export interface IMessage {
+  code: number;
+  data: {
+    message?: string;
+  }
+}
+
 export interface ITodoService {
   code: number;
-  data:
-    | {
-        id: number;
-      }
-    | ITodo
-    | ITodo[];
+  data: ITodo;
+}
+
+export interface ITodosService {
+  code: number;
+  data: ITodo[];
 }

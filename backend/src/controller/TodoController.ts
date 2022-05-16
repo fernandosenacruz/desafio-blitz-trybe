@@ -27,7 +27,7 @@ export default class TodoController {
     try {
       const { status } = req.query;
 
-      const { code, data } = await this.todoService.getTodos(status);
+      const { code, data } = await this.todoService.getTodos(status as string);
 
       return res.status(code).json(data);
     } catch (error) {

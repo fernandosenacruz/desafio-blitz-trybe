@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Table, Dropdown, Button } from 'react-bootstrap';
 import axios from 'axios';
-// import API from '../utils/getTodo';
+import TodoContextProvider from '../context/TodoContext';
 
 const TableTodo = () => {
   const [todos, setTodos] = useState([
@@ -15,9 +15,11 @@ const TableTodo = () => {
     },
   ]);
 
-  const [, setTodo] = useContext();
+  const [todo, setTodo] = useContext(TodoContextProvider);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    console.log(todo.data);
+  });
 
   const getTodo = async (status) => {
     let baseURL = 'http://localhost:3001/';
