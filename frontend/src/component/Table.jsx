@@ -1,7 +1,50 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Table, Dropdown, Button } from 'react-bootstrap';
+import { Table, Dropdown, Button, Modal } from 'react-bootstrap';
 import axios from 'axios';
-import TodoContextProvider from '../context/TodoContext';
+import { TodoContext } from '../context/TodoContext';
+
+const DeleteTodo = () => {
+  const [todo] = useContext(TodoContext);
+  const [show, setShow] = useState(false);
+  
+  setShow(true);
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:3001/todo/${id}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+
+  const handleDeleteTask = () => {
+    handleDelete(todo.id);
+    setShow(false);
+  };
+
+  return (
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Task!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          Warning! Do you really want to delete this task?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="danger" onClick={handleDeleteTask}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+  );
+};
 
 const TableTodo = () => {
   const [todos, setTodos] = useState([
@@ -15,11 +58,11 @@ const TableTodo = () => {
     },
   ]);
 
-  const [todo, setTodo] = useContext(TodoContextProvider);
+  const [setTodo] = useContext(TodoContext);
 
   useEffect(() => {
-    console.log(todo.data);
-  });
+    getTodo('all');
+  }, []);
 
   const getTodo = async (status) => {
     let baseURL = 'http://localhost:3001/';
@@ -47,12 +90,12 @@ const TableTodo = () => {
 
   const handleClick = async (id) => {
     try {
-      const { data } = await axios.get(`http://localhost:3001/todo/${id}`)
-      
+      const { data } = await axios.get(`http://localhost:3001/todo/${id}`);
+
       setTodo(data);
     } catch (error) {
       console.log(error);
-    };
+    }
   };
 
   return (
@@ -70,7 +113,7 @@ const TableTodo = () => {
           <h3>Loading</h3>
         ) : (
           todos.map(({ id, title, description, status }, index) => (
-            <tbody key={index + id}>
+            <tbody key={id}>
               <tr>
                 <td>{index + 1}</td>
                 <td>{title}</td>
@@ -89,7 +132,7 @@ const TableTodo = () => {
                     variant="danger"
                     type="button"
                     size="sm"
-                    onClick={() => handleClick(id)}
+                    onClick={() => DeleteTodo()}
                   >
                     delete
                   </Button>
