@@ -25,7 +25,7 @@ const Todo = () => {
 
   return (
     <>
-      <Form ref={form} onSubmit={(e) => handleSubmit(e)}>
+      <Form ref={form} className="todo" onSubmit={(e) => handleSubmit(e)}>
         <Form.Group className="mb-3" controlId="formTitle">
           <Form.Control type="input" name="title" placeholder="Title" required/>
           <Form.Text className="text-muted">
@@ -37,7 +37,7 @@ const Todo = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicCheckbox">
         </Form.Group>
-        <Button variant="dark" type="submit">
+        <Button variant="dark" size="sm" type="submit">
           Add task
         </Button>
     </Form>

@@ -100,7 +100,7 @@ const TableTodo = () => {
 
   return (
     <div className="table-todo">
-      <Table striped bordered hover variant="dark">
+      <Table striped hover variant="dark">
         <thead>
           <tr>
             <th>#</th>
