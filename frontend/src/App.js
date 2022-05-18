@@ -1,22 +1,19 @@
-import TodoContextProvider, { TodoContext } from './context/TodoContext';
 import Header from './component/Header';
 import Table from './component/Table';
 import Todo from './component/Todo';
 import UpdateTodo from './component/UpdateTodo';
 import { useContext } from 'react';
+import { TodoContext } from './context/TodoContext';
 import './App.css';
 
 function App() {
-  const { isUpdate } = useContext(TodoContext);
-  console.log('app', isUpdate);
+  const {isUpdate} = useContext(TodoContext);
 
   return (
     <>
       <Header />
-      <TodoContextProvider>
-        <Table />
-        { isUpdate ? <UpdateTodo /> : <Todo /> }
-      </TodoContextProvider>
+      <Table />
+      {isUpdate === true ? <UpdateTodo /> : <Todo />}
     </>
   );
 }

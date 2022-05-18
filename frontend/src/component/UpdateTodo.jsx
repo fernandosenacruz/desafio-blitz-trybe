@@ -5,11 +5,9 @@ import axios from 'axios';
 
 const UpdateTodo = () => {
   const form = useRef();
+  const { isUpdate, setIsUpdate, todo } = useContext(TodoContext);
 
-  const [todo] = useContext(TodoContext);
   const { id, title, description, status } = todo;
-  const { isUpdate } = useContext(TodoContext);
-  console.log('update', isUpdate);
 
   const [statusTodo, setStatusTodo] = useState({ status });
 
@@ -19,8 +17,6 @@ const UpdateTodo = () => {
     setStatusTodo({
       [name]: value,
     });
-
-    // isUpdate: !isUpdate;
   };
 
   const handleSubmit = async (e) => {
@@ -37,7 +33,7 @@ const UpdateTodo = () => {
         description,
         status,
       });
-
+      setIsUpdate(!isUpdate);
       form.reset();
     } catch (error) {
       console.log(error);
