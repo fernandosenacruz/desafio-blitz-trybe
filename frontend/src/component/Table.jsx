@@ -92,9 +92,9 @@ const TableTodo = () => {
                     type="button"
                     size="sm"
                     onClick={() => {
-                      setShow(true);
                       handleClick(id);
-                      DeleteTodo(todo);
+                      setShow(true);
+                      DeleteTodo();
                     }}
                   >
                     delete
