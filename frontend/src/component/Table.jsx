@@ -57,7 +57,7 @@ const TableTodo = () => {
     }
   };
 
-  return show === true ? (
+  return show === false ? (
     <div className="table-todo">
       <Table striped hover variant="dark">
         <thead>
@@ -93,6 +93,7 @@ const TableTodo = () => {
                     size="sm"
                     onClick={() => {
                       setShow(true);
+                      handleClick(id);
                       DeleteTodo(todo);
                     }}
                   >

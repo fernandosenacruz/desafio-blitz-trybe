@@ -4,8 +4,9 @@ import axios from 'axios';
 import { TodoContext } from '../context/TodoContext';
 
 
-const DeleteTodo = (todo) => {
+const DeleteTodo = (id) => {
   const { show, setShow } = useContext(TodoContext);
+  console.log(id);
 
   const handleDelete = async (id) => {
     try {
@@ -20,7 +21,7 @@ const DeleteTodo = (todo) => {
   };
 
   const handleDeleteTask = () => {
-    handleDelete(todo.id);
+    handleDelete(id);
     setShow(false);
   };
 
